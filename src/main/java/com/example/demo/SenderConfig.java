@@ -3,6 +3,8 @@ package com.example.demo;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.kafka.clients.admin.AdminClient;
+import org.apache.kafka.clients.admin.NewTopic
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +31,13 @@ public class SenderConfig {
 	    props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
 	        StringSerializer.class);
 
+		//to create a kafka topic programatically 
+		  AdminClient admin = AdminClient.create(props);
+	NewTopic topic = new NewTopic("topicOne", 12, (short) 1);
+		List<NewTopic> topicList = new ArrayList<>();
+		topicList.add(topic);
+		admin.createTopics(topicList);
+		  
 	    return props;
 	  }
 
